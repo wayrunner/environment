@@ -35,7 +35,6 @@ echo "add homebrew zsh to shells"
 
 echo "post brew bundle"
   brew link curl --force
-  #brew link openssl --force #homebrew doesn't allow this anymore
 
 echo "docker containers"
   open -a Docker
@@ -56,14 +55,8 @@ echo "copying public key to clipboard. Paste it into your Github account ..."
   open https://github.com/account/ssh
   read -p "Press any key once you have pasted into your Github account..." -n1 -s
 
-echo "install prey"
-  open https://panel.preyproject.com/settings
-  echo "Type your prey apikey found on your profile page, followed by [ENTER]:"
-  read apikey
-  API_KEY="$apikey" brew cask install prey
-
 echo "fetch dotfiles"
-  git clone git@github.com:damonmorgan/dotfiles.git ~/.dotfiles
+  git clone git@github.com:qmee/dotfiles.git ~/.dotfiles
 
 echo "install dotfiles"
   cd ~/.dotfiles
@@ -131,7 +124,7 @@ echo "Check for iTerm updates automatically"
   defaults write com.googlecode.iterm2 SUEnableAutomaticChecks -bool true
 
 echo "setup iTerm2 DynamicProfile and make default"
-  wget https://raw.githubusercontent.com/damonmorgan/environment/master/iTerm2/DynamicProfiles/inconsolarized.json -O ~/Library/Application\ Support/iTerm2/DynamicProfiles/inconsolarized.json
+  wget https://raw.githubusercontent.com/qmee/environment/master/iTerm2/DynamicProfiles/inconsolarized.json -O ~/Library/Application\ Support/iTerm2/DynamicProfiles/inconsolarized.json
   defaults write com.googlecode.iterm2 "Default Bookmark Guid" "d326c889-7564-409b-8b26-d3671001617e"
 
 echo "latest ruby"
