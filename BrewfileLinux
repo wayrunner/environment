@@ -1,0 +1,52 @@
+# replace default openssl
+brew 'openssl'
+
+# transparent proxy meets VPN meets ssh
+brew 'sshuttle'
+brew 'wireguard-tools'
+
+# shell
+brew 'zsh'
+brew 'zsh-completions'
+
+# terminal
+brew 'ccat'
+
+# git
+brew 'git'
+brew 'git-extras'
+brew 'git-crypt'
+brew 'gpg'
+
+## development languages
+# ruby with version manager
+brew 'chruby'
+brew 'ruby-install'
+# node
+brew 'node'
+brew 'yarn'
+# other
+brew 'python'
+brew 'go'
+brew 'scala'
+brew 'elixir'
+brew 'terraform'
+
+# database client tools and libs
+brew 'postgresql'
+brew 'redis'
+brew 'rabbitmq'
+brew 'memcached'
+
+# utils
+brew 'coreutils'
+brew 'ripgrep'
+brew 'fasd'
+brew 'wget'
+brew 'ccat'
+brew 'awscli'
+brew 'forego'
+brew 'jq'
+
+# editor
+brew 'vim'

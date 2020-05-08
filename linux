@@ -1,0 +1,168 @@
+if [[ -f $HOME/.zshrc ]]; then source $HOME/.zshrc; fi
+
+echo "Installing dev-tools"
+sudo apt install build-essential
+sudo apt install curl
+sudo apt install git
+sudo apt install docker.io
+sudo apt install docker
+sudo usermod -aG docker $USER
+
+echo "installing homebrew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  # Configuring brew into path
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) >> $HOME/.profile
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+echo "update homebrew apps"
+  # Make sure we’re using the latest Homebrew
+  brew update --verbose
+  brew doctor
+  # Upgrade any already installed formulae
+  brew outdated
+  brew upgrade
+  if [[ -z $(brew list | grep wget) ]]; then
+    brew install wget
+    brew tap Homebrew/bundle
+  fi
+  wget -nv https://raw.githubusercontent.com/qmee/environment/master/BrewfileLinux -O $HOME/linuxenv/Brewfile
+  cd $HOME/linuxenv
+  brew bundle --verbose
+  # Remove outdated versions
+  brew cleanup
+
+echo "configuring zsh"
+if [ $SHELL != $(which zsh) ] && [[ -z $(sudo cat /etc/shells | grep $(which zsh)) ]]; then
+  echo "add homebrew zsh to shells"
+  sudo sh -c "echo $(which zsh) >> /etc/shells"
+fi
+
+if type brew &>/dev/null; then
+  echo "Setting zsh autocompletions"
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+echo "docker containers"
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+# Starting Docker on boot
+sudo systemctl enable docker
+# Start Docker
+sudo systemctl start docker
+
+wget -nv https://raw.githubusercontent.com/qmee/environment/master/docker-compose.yml -O $HOME/linuxenv/docker-compose.yml
+cd $HOME/linuxenv
+
+sudo docker-compose pull
+sudo docker-compose up -d
+sudo docker system prune --force --all
+sudo docker volume prune --force
+
+echo "simulating pbcopy on Linux"
+sudo apt-get install xclip -y
+echo "#pbcopy & pbpaste aliases" >> ~/.zshrc
+echo "alias pbcopy='xclip -selection clipboard'" >> ~/.zshrc
+echo "alias pbpaste='xclip -selection clipboard -o'"  >> ~/.zshrc
+source  ~/.zshrc
+
+
+echo "checking for SSH key, generating one if it does not exist and add to github ..."
+  if [[ ! -f $HOME/.ssh/id_rsa.pub ]]; then
+    ssh-keygen -t rsa -b 4096
+    cat $HOME/.ssh/id_rsa.pub | pbcopy
+    xdg-open https://github.com/account/ssh
+    read -p "Press any key once you have pasted into your Github account..." -n1 -s
+  fi
+
+echo "installing vs-code extensions"
+  code --install-extension eamodio.gitlens
+  code --install-extension ms-python.python
+  code --install-extension rebornix.ruby
+  code --install-extension ms-azuretools.vscode-docker
+
+if [[ ! -f $HOME/.dotfiles/zshrc ]]; then
+  echo "install dotfiles"
+  git clone git@github.com:qmee/dotfiles_linux.git $HOME/.dotfiles
+  cd $HOME/.dotfiles
+  rake install
+fi
+
+echo "docker zsh completions"
+  if [[ ! -d $HOME/.zsh/completions ]]; then
+    cd $HOME/.zsh
+    mkdir completions
+  fi
+  wget -nv https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker -O $HOME/.zsh/completions/_docker
+  wget -nv https://raw.githubusercontent.com/docker/machine/master/contrib/completion/zsh/_docker-machine -O $HOME/.zsh/completions/_docker-machine
+  wget -nv https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose -O $HOME/.zsh/completions/_docker-compose
+
+echo "Setting up Heroku"
+  sudo snap install --classic heroku
+
+if [[ -z $(/snap/bin/heroku plugins | grep 'heroku-pg-extras') ]]; then
+  /snap/bin/heroku plugins:install heroku-pg-extras
+  heroku autocomplete
+else
+  /snap/bin/heroku update
+fi
+
+echo "vim Vundle"
+  if [[ ! -d $HOME/.vim/bundle/Vundle.vim ]]; then
+    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+    vim +PluginInstall +qall
+  else
+    vundle-update
+  fi
+
+if [[ ! -f $HOME/.vim/bundle/command-t/ruby/command-t/ext/command-t/metadata.rb ]]; then
+  echo "build Command-T plugin"
+  cd $HOME/.vim/bundle/command-t
+  rake make
+fi
+
+if [[ ! -d $HOME/development ]]; then
+  echo "create development directory"
+  cd $HOME
+  mkdir development
+fi
+
+if [[ ! -d $HOME/development/snipmate-snippets ]]; then
+  echo "install snippets"
+  git clone git://github.com/scrooloose/snipmate-snippets.git $HOME/development/snipmate-snippets
+  sed -i -e 's/snipmate/snipmate.vim/g' $HOME/development/snipmate-snippets/Rakefile
+  cd $HOME/development/snipmate-snippets
+  rake deploy_local
+fi
+
+echo "latest ruby"
+  source $(brew --prefix chruby)/share/chruby/chruby.sh
+  source $(brew --prefix chruby)/share/chruby/auto.sh
+  cd $HOME/development
+  ruby_latest_version="$(curl -q -s https://raw.githubusercontent.com/postmodern/ruby-versions/master/ruby/stable.txt | tail -1)"
+  ruby_current_version="$(cat .ruby-version)"
+  if [[ $ruby_latest_version = $ruby_current_version ]]; then
+    echo "Latest ruby installed - Updating rubygems"
+    gem update --system --no-document
+    gem update bundler
+    gem clean
+  else
+    ruby-install "ruby $ruby_latest_version" -- --disable-install-rdoc
+    rm -rf $HOME/src
+    rm -rf $HOME/.rubies/ruby-$ruby_current_version
+    rm -rf $HOME/.gem/ruby/$ruby_current_version
+    echo "$ruby_latest_version" > .ruby-version
+    source $(brew --prefix chruby)/share/chruby/chruby.sh
+    source $(brew --prefix chruby)/share/chruby/auto.sh
+    cd $HOME
+    cd $HOME/development
+    chruby "$ruby_latest_version"
+    gem update --system --no-document
+    gem clean
+    gem install bundler --no-document
+  fi
+
