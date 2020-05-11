@@ -10,8 +10,7 @@ sudo usermod -aG docker $USER
 
 echo "installing homebrew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  # Configuring brew into path
-  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) >> $HOME/.profile
+  # Adding brew to current running env (It gets add into PATH via zsh)
   eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 echo "update homebrew apps"
@@ -55,13 +54,17 @@ sudo systemctl enable docker
 # Start Docker
 sudo systemctl start docker
 
-wget -nv https://raw.githubusercontent.com/qmee/environment/master/docker-compose.yml -O $HOME/linuxenv/docker-compose.yml
-cd $HOME/linuxenv
+read -p "Do you want to configure Qmee Docker services now? [y,n] (Select YES if not using QM later)" -n1 -s CFG_DOCKER
 
-sudo docker-compose pull
-sudo docker-compose up -d
-sudo docker system prune --force --all
-sudo docker volume prune --force
+if [[ "$CFG_DOCKER" == "y" ]]; then
+  wget -nv https://raw.githubusercontent.com/qmee/environment/master/docker-compose.yml -O $HOME/linuxenv/docker-compose.yml
+  cd $HOME/linuxenv
+
+  sudo docker-compose pull
+  sudo docker-compose up -d
+  sudo docker system prune --force --all
+  sudo docker volume prune --force
+fi
 
 echo "simulating pbcopy on Linux"
 sudo apt-get install xclip -y
@@ -84,6 +87,7 @@ echo "installing vs-code extensions"
   code --install-extension ms-python.python
   code --install-extension rebornix.ruby
   code --install-extension ms-azuretools.vscode-docker
+  code --install-extension mjmcloug.vscode-elixir
 
 if [[ ! -f $HOME/.dotfiles/zshrc ]]; then
   echo "install dotfiles"
@@ -166,3 +170,8 @@ echo "latest ruby"
     gem install bundler --no-document
   fi
 
+echo "Installing QM"
+  cd $HOME/development/
+  git clone git@github.com:qmee/qm.git
+  cd ./qm
+  ./bin/qm setup
