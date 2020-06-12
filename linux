@@ -54,7 +54,7 @@ sudo systemctl enable docker
 # Start Docker
 sudo systemctl start docker
 
-read -p "Do you want to configure Qmee Docker services now? [y,n] (Select YES if not using QM later)" -n1 -s CFG_DOCKER
+read -p "Do you want to configure Qmee Docker services now? [y,n] (Select 'y' ONLY if not using QM later)" -n1 -s CFG_DOCKER
 
 if [[ "$CFG_DOCKER" == "y" ]]; then
   wget -nv https://raw.githubusercontent.com/qmee/environment/master/docker-compose.yml -O $HOME/linuxenv/docker-compose.yml
@@ -170,8 +170,12 @@ echo "latest ruby"
     gem install bundler --no-document
   fi
 
-echo "Installing QM"
-  cd $HOME/development/
-  git clone git@github.com:qmee/qm.git
-  cd ./qm
-  ./bin/qm setup
+read -p "Do you want to configure QM now? [y,n]" -n1 -s CFG_QM
+
+if [[ "$CFG_QM" == "y" ]]; then
+  echo "Installing QM"
+    cd $HOME/development/
+    git clone git@github.com:qmee/qm.git
+    cd ./qm
+    ./bin/qm setup
+fi
