@@ -82,7 +82,8 @@ echo "checking for SSH key, generating one if it does not exist and add to githu
     read -p "Press any key once you have pasted into your Github account..." -n1 -s
   fi
 
-echo "installing vs-code extensions"
+echo "installing vs-code & extensions"
+  sudo apt install code
   code --install-extension eamodio.gitlens
   code --install-extension ms-python.python
   code --install-extension rebornix.ruby
