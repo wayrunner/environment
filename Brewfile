@@ -4,9 +4,9 @@
 # mac app store
 brew 'mas'
 mas 'Xcode', id: 497799835
-mas 'WireGuard', id: 1451685025
+#mas 'WireGuard', id: 1451685025
 mas 'Keynote', id: 409183694
-mas 'Slack', id: 803453959
+#mas 'Slack', id: 803453959
 
 # replace default openssl
 brew 'openssl'
@@ -40,7 +40,7 @@ brew 'node'
 brew 'yarn'
 # other
 brew 'python'
-brew 'python@2'
+#brew 'python@2'
 cask 'java'
 brew 'go'
 brew 'scala'
@@ -65,6 +65,7 @@ brew 'awscli'
 brew 'terminal-notifier'
 brew 'forego'
 brew 'jq'
+brew 'svn'
 
 # heroku
 tap 'heroku/brew'
@@ -107,6 +108,7 @@ cask 'cyberduck'
 #cask 'vanilla'
 cask 'authy'
 cask 'notion'
+cask 'slack'
 
 tap 'homebrew/cask-drivers'
 cask "logitech-options"
