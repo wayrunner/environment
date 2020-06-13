@@ -39,7 +39,7 @@ echo "update homebrew apps"
     brew install wget
     brew tap Homebrew/bundle
   fi
-  wget -nv https://raw.githubusercontent.com/qmee/environment/master/Brewfile -O $HOME/macenv/Brewfile
+  wget -nv https://raw.githubusercontent.com/ronald05arias/environment/master/Brewfile -O $HOME/macenv/Brewfile
   cd $HOME/macenv
   brew bundle --verbose
   # Remove outdated versions from the cellar
@@ -56,10 +56,10 @@ if [[ -z $(pgrep -x Docker) ]]; then
   read -p "Press any key to continue... " -n1 -s
 fi
 
-read -p "Do you want to configure Qmee Docker services now? [y,n] (Select 'y' ONLY if not using QM later)" -n1 -s CFG_DOCKER
+read -p "Do you want to configure Docker services now? [y,n] (Select 'y' ONLY if not using QM later)" -n1 -s CFG_DOCKER
 
 if [[ "$CFG_DOCKER" == "y" ]]; then
-  wget -nv https://raw.githubusercontent.com/qmee/environment/master/docker-compose.yml -O $HOME/macenv/docker-compose.yml
+  wget -nv https://raw.githubusercontent.com/ronald05arias/environment/master/docker-compose.yml -O $HOME/macenv/docker-compose.yml
   cd $HOME/macenv
   docker-compose pull
   docker-compose up -d
@@ -68,8 +68,8 @@ if [[ "$CFG_DOCKER" == "y" ]]; then
 fi
 
 echo "checking for SSH key, try to restore from secrets if it doesn't exist..."
-  wget -nv https://raw.githubusercontent.com/qmee/environment/master/Rakefile -O $HOME/macenv/Rakefile
-  wget -nv https://raw.githubusercontent.com/qmee/environment/master/secrets/secrets.rake -O $HOME/macenv/secrets/secrets.rake
+  wget -nv https://raw.githubusercontent.com/ronald05arias/environment/master/Rakefile -O $HOME/macenv/Rakefile
+  wget -nv https://raw.githubusercontent.com/ronald05arias/environment/master/secrets/secrets.rake -O $HOME/macenv/secrets/secrets.rake
   cd $HOME/macenv
   if [[ ! -f $HOME/.ssh/id_rsa.pub ]]; then
     # it's likely that both history files have been recently created as part of the install process, but we want to
@@ -87,6 +87,10 @@ echo "checking for SSH key, generating one if it doesn't exist and add to github
     cat $HOME/.ssh/id_rsa.pub | pbcopy
     open https://github.com/account/ssh
     read -p "Press any key once you have pasted into your Github account..." -n1 -s
+
+    open https://dashboard.heroku.com/account/#ssh-keys
+    read -p "Press any key once you have pasted into your Heroku account..." -n1 -s
+
   fi
 
 if [[ -z $(brew cask list | grep 'prey') ]]; then
@@ -104,11 +108,15 @@ if [[ -z $(brew cask list | grep 'visual-studio-code') ]]; then
   code --install-extension rebornix.ruby
   code --install-extension ms-azuretools.vscode-docker
   code --install-extension mjmcloug.vscode-elixir
+  code --install-extension shan.code-settings-sync
+  code --install-extension dsznajder.es7-react-js-snippets
+  code --install-extension aaron-bond.better-comments
+  code --install-extension vscode-icons-team.vscode-icons
 fi
 
 if [[ ! -f $HOME/.dotfiles/zshrc ]]; then
   echo "install dotfiles"
-  git clone git@github.com:qmee/dotfiles.git $HOME/.dotfiles
+  git clone git@github.com:ronald05arias/dotfiles.git $HOME/.dotfiles
   cd $HOME/.dotfiles
   rake install
 fi
@@ -228,6 +236,9 @@ if [[ "$CFG_QM" == "y" ]]; then
     ./bin/qm setup
 fi
 
+echo "Powerlevel10k"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+
 echo "set macos preferences"
 # from ~/.osx — http://mths.be/osx
 
@@ -235,8 +246,8 @@ echo "set macos preferences"
 # General UI/UX                                                               #
 ###############################################################################
 
-echo "Disable the sound effects on boot"
-sudo nvram SystemAudioVolume=" "
+#echo "Disable the sound effects on boot"
+#sudo nvram SystemAudioVolume=" "
 
 echo "Expand save panel by default"
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
@@ -252,8 +263,8 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 echo "Automatically quit printer app once the print jobs complete"
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
-echo "Disable Resume system-wide"
-defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
+#echo "Disable Resume system-wide"
+#defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
 
 echo "Disable Photos.app from starting everytime a device is plugged in"
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
@@ -271,11 +282,11 @@ defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreS
 # Mouse and trackpad                                                          #
 ###############################################################################
 
-echo "Turn on bluetooth mouse secondary click"
-defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode TwoButton
+#echo "Turn on bluetooth mouse secondary click"
+#defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode TwoButton
 
-echo "Turn on trackpad App Expose"
-defaults write com.apple.dock showAppExposeGestureEnabled -bool true
+#echo "Turn on trackpad App Expose"
+#defaults write com.apple.dock showAppExposeGestureEnabled -bool true
 
 ###############################################################################
 # Mac App Store                                                               #
@@ -284,8 +295,8 @@ defaults write com.apple.dock showAppExposeGestureEnabled -bool true
 echo "Enable the automatic update check"
 defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
 
-echo "Check for software updates daily, not just once per week"
-defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+#echo "Check for software updates daily, not just once per week"
+#defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
 echo "Download newly available updates in background"
 defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
@@ -327,6 +338,9 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 echo "Finder: show status bar"
 defaults write com.apple.finder ShowStatusBar -bool true
 
+echo "Finder: show path bar"
+defaults write com.apple.finder ShowPathbar -bool true
+
 echo "When performing a search, search the current folder by default"
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
@@ -337,9 +351,10 @@ echo "Avoid creating .DS_Store files on network or USB volumes"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
-echo "Set Downloads as the default location for new Finder windows"
-defaults write com.apple.finder NewWindowTarget -string "PfLo"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
+
+#echo "Set Downloads as the default location for new Finder windows"
+#defaults write com.apple.finder NewWindowTarget -string "PfLo"
+#defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
 
 ###############################################################################
 # TextEdit
@@ -352,8 +367,11 @@ defaults write com.apple.TextEdit RichText -int 0
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
 
-echo "Set the icon size of Dock items to 46 pixels"
-defaults write com.apple.dock tilesize -int 46
+#echo "Set the icon size of Dock items to 46 pixels"
+#defaults write com.apple.dock tilesize -int 46
+
+echo "Automatically hide and show the Dock"
+defaults write com.apple.dock autohide -bool true
 
 ###############################################################################
 # Time Machine                                                                #
@@ -365,6 +383,13 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 echo "Disable local Time Machine backups"
 #hash tmutil &> /dev/null && sudo tmutil disablelocal
 
+###############################################################################
+# Activity Monitor                                                            #
+###############################################################################
+
+echo "Sort Activity Monitor results by CPU usage"
+defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+defaults write com.apple.ActivityMonitor SortDirection -int 0
 
 # list casks that are outdated
 echo ""

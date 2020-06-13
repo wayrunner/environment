@@ -5,12 +5,7 @@
 brew 'mas'
 mas 'Xcode', id: 497799835
 mas 'WireGuard', id: 1451685025
-mas 'OneDrive', id: 823766827
-mas 'iMovie', id: 408981434
 mas 'Keynote', id: 409183694
-#mas 'Microsoft Word', id: 462054704
-#mas 'Microsoft Excel', id: 462058435
-#mas 'Microsoft Powerpoint', id: 462062816
 mas 'Slack', id: 803453959
 
 # replace default openssl
@@ -23,6 +18,7 @@ brew 'wireguard-tools'
 # shell
 brew 'zsh'
 brew 'zsh-completions'
+brew 'zsh-syntax-highlighting'
 
 # terminal
 cask 'iterm2'
@@ -86,41 +82,39 @@ cask 'font-inconsolata-for-powerline'
 # browsers
 tap 'homebrew/cask-versions'
 cask 'google-chrome-dev'
-cask 'opera'
-cask 'opera-developer'
 cask 'firefox'
 cask 'firefox-developer-edition'
-cask 'microsoft-edge'
 
 # apps
 cask 'virtualbox'
 cask 'virtualbox-extension-pack'
 cask 'rdm'
 cask 'vlc'
-cask 'atom'
+#cask 'atom'
 cask 'calibre'
 cask 'flux'
 cask 'skype'
 cask 'spotify'
-cask 'transmission-remote-gui'
+cask 'sourcetree'
+#cask 'transmission-remote-gui'
 #cask 'truecrypt71a' #No available Cask for truecrypt71a - http://apple.stackexchange.com/questions/173879/truecrypt-7-1a-requires-mac-os-x-10-4-or-later-on-yosemite-10-10
 cask 'veracrypt'
 cask 'cyberduck'
-cask 'android-file-transfer'
+#cask 'android-file-transfer'
 #cask 'gimp'
 #cask 'steam'
 #cask 'ngrok'
-cask 'vanilla'
+#cask 'vanilla'
 cask 'authy'
 cask 'notion'
 
 tap 'homebrew/cask-drivers'
-cask 'bose-updater'
+cask "logitech-options"
 
 # drives
 cask 'dropbox'
-#cask 'google-drive-file-stream'
-#cask 'amazon-photos'
+cask 'google-drive-file-stream'
+cask 'amazon-photos'
 
 # docker for mac
 cask 'docker'

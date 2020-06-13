@@ -24,7 +24,7 @@ echo "update homebrew apps"
     brew install wget
     brew tap Homebrew/bundle
   fi
-  wget -nv https://raw.githubusercontent.com/qmee/environment/master/BrewfileLinux -O $HOME/linuxenv/Brewfile
+  wget -nv https://raw.githubusercontent.com/ronald05arias/environment/master/BrewfileLinux -O $HOME/linuxenv/Brewfile
   cd $HOME/linuxenv
   brew bundle --verbose
   # Remove outdated versions
@@ -57,7 +57,7 @@ sudo systemctl start docker
 read -p "Do you want to configure Qmee Docker services now? [y,n] (Select 'y' ONLY if not using QM later)" -n1 -s CFG_DOCKER
 
 if [[ "$CFG_DOCKER" == "y" ]]; then
-  wget -nv https://raw.githubusercontent.com/qmee/environment/master/docker-compose.yml -O $HOME/linuxenv/docker-compose.yml
+  wget -nv https://raw.githubusercontent.com/ronald05arias/environment/master/docker-compose.yml -O $HOME/linuxenv/docker-compose.yml
   cd $HOME/linuxenv
 
   sudo docker-compose pull
@@ -92,7 +92,7 @@ echo "installing vs-code & extensions"
 
 if [[ ! -f $HOME/.dotfiles/zshrc ]]; then
   echo "install dotfiles"
-  git clone git@github.com:qmee/dotfiles_linux.git $HOME/.dotfiles
+  git clone git@github.com:ronald05arias/dotfiles_linux.git $HOME/.dotfiles
   cd $HOME/.dotfiles
   rake install
 fi

@@ -1,6 +1,5 @@
-Qmee base Environment
+Ron's dev Environment
 ========================
-(Heavily influenced by https://github.com/damonmorgan/environment)
 
 Environment is a script to get OSX/macOS or Linux set up as a development machine with common Qmee preferences.
 
@@ -14,12 +13,12 @@ Installation
 
 Mac
 ```
-bash <(curl -s https://raw.githubusercontent.com/qmee/environment/master/mac)
+bash <(curl -s https://raw.githubusercontent.com/ronald05arias/environment/master/mac)
 ```
 
 Linux
 ```
-bash <(curl -s https://raw.githubusercontent.com/qmee/environment/master/linux)
+bash <(curl -s https://raw.githubusercontent.com/ronald05arias/environment/master/linux)
 ```
 
 What is installed
@@ -52,7 +51,7 @@ What is installed
   * chrome dev channel, opera, firefox
 * apps
   * virtualbox, atom, dropbox, etc.
-* [dotfiles](https://github.com/qmee/dotfiles) (preferred configuration)
+* [dotfiles](https://github.com/ronald05arias/dotfiles) (preferred configuration)
 * [Heroku Toolbelt](https://toolbelt.heroku.com/)
   * [config plugin](https://github.com/ddollar/heroku-config) for local `ENV` variables
   * [pg-extras plugin](https://github.com/heroku/heroku-pg-extras) heroku pg:index-size
