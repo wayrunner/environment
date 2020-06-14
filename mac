@@ -121,6 +121,10 @@ if [[ ! -f $HOME/.dotfiles/zshrc ]]; then
   rake install
 fi
 
+echo "Powerlevel10k"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+
+
 echo "docker zsh completions"
   if [[ ! -d $HOME/.zsh/completions ]]; then
     cd $HOME/.zsh
@@ -235,9 +239,6 @@ if [[ "$CFG_QM" == "y" ]]; then
     cd ./qm
     ./bin/qm setup
 fi
-
-echo "Powerlevel10k"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 
 echo "set macos preferences"
 # from ~/.osx — http://mths.be/osx
