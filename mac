@@ -161,24 +161,25 @@ if [[ ! -f $HOME/.vim/bundle/command-t/ruby/command-t/ext/command-t/metadata.rb 
   rake make
 fi
 
-if [[ ! -d $HOME/development ]]; then
+if [[ ! -d $HOME/Development ]]; then
   echo "create development directory"
   cd $HOME
-  mkdir development
+  mkdir Development
+  mkdir Development/utils
 fi
 
-if [[ ! -d $HOME/development/snipmate-snippets ]]; then
+if [[ ! -d $HOME/Development/utils/snipmate-snippets ]]; then
   echo "install snippets"
-  git clone git://github.com/scrooloose/snipmate-snippets.git $HOME/development/snipmate-snippets
-  sed -i -e 's/snipmate/snipmate.vim/g' $HOME/development/snipmate-snippets/Rakefile
-  cd $HOME/development/snipmate-snippets
+  git clone git://github.com/scrooloose/snipmate-snippets.git $HOME/Development/utils/snipmate-snippets
+  sed -i -e 's/snipmate/snipmate.vim/g' $HOME/Development/utils/snipmate-snippets/Rakefile
+  cd $HOME/Development/utils/snipmate-snippets
   rake deploy_local
 fi
 
-if [[ ! -d $HOME/development/solarized ]]; then
+if [[ ! -d $HOME/Development/utils/solarized ]]; then
   echo "better colour scheme for terminals"
-  git clone git://github.com/altercation/solarized.git $HOME/development/solarized
-  open "$HOME/development/solarized/iterm2-colors-solarized/Solarized Dark.itermcolors"
+  git clone git://github.com/altercation/solarized.git $HOME/Development/utils/solarized
+  open "$HOME/Development/utils/solarized/iterm2-colors-solarized/Solarized Dark.itermcolors"
   read -p "Press any key to continue... " -n1 -s
 fi
 
@@ -193,7 +194,7 @@ fi
 echo "latest ruby"
   source $(brew --prefix chruby)/share/chruby/chruby.sh
   source $(brew --prefix chruby)/share/chruby/auto.sh
-  cd $HOME/development
+  cd $HOME/Development
   ruby_latest_version="$(curl -q -s https://raw.githubusercontent.com/postmodern/ruby-versions/master/ruby/stable.txt | tail -1)"
   ruby_current_version="$(cat .ruby-version)"
   if [[ $ruby_latest_version = $ruby_current_version ]]; then
@@ -210,7 +211,7 @@ echo "latest ruby"
     source $(brew --prefix chruby)/share/chruby/chruby.sh
     source $(brew --prefix chruby)/share/chruby/auto.sh
     cd $HOME
-    cd $HOME/development
+    cd $HOME/Development
     chruby "$ruby_latest_version"
     gem update --system --no-document
     gem clean
@@ -234,7 +235,7 @@ read -p "Do you want to configure QM now? [y,n]" -n1 -s CFG_QM
 
 if [[ "$CFG_QM" == "y" ]]; then
   echo "Installing QM"
-    cd $HOME/development/
+    cd $HOME/Development/
     git clone git@github.com:qmee/qm.git
     cd ./qm
     ./bin/qm setup
