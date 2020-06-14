@@ -109,6 +109,7 @@ cask 'cyberduck'
 cask 'authy'
 cask 'notion'
 cask 'slack'
+cask 'zoom'
 
 tap 'homebrew/cask-drivers'
 cask "logitech-options"
@@ -120,3 +121,4 @@ cask 'amazon-photos'
 
 # docker for mac
 cask 'docker'
+cask 'kitematic'
