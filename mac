@@ -165,21 +165,21 @@ if [[ ! -d $HOME/Development ]]; then
   echo "create development directory"
   cd $HOME
   mkdir Development
-  mkdir Development/utils
+  mkdir Development/vendor
 fi
 
-if [[ ! -d $HOME/Development/utils/snipmate-snippets ]]; then
+if [[ ! -d $HOME/Development/vendor/snipmate-snippets ]]; then
   echo "install snippets"
-  git clone git://github.com/scrooloose/snipmate-snippets.git $HOME/Development/utils/snipmate-snippets
-  sed -i -e 's/snipmate/snipmate.vim/g' $HOME/Development/utils/snipmate-snippets/Rakefile
-  cd $HOME/Development/utils/snipmate-snippets
+  git clone git://github.com/scrooloose/snipmate-snippets.git $HOME/Development/vendor/snipmate-snippets
+  sed -i -e 's/snipmate/snipmate.vim/g' $HOME/Development/vendor/snipmate-snippets/Rakefile
+  cd $HOME/Development/vendor/snipmate-snippets
   rake deploy_local
 fi
 
-if [[ ! -d $HOME/Development/utils/solarized ]]; then
+if [[ ! -d $HOME/Development/vendor/solarized ]]; then
   echo "better colour scheme for terminals"
-  git clone git://github.com/altercation/solarized.git $HOME/Development/utils/solarized
-  open "$HOME/Development/utils/solarized/iterm2-colors-solarized/Solarized Dark.itermcolors"
+  git clone git://github.com/altercation/solarized.git $HOME/Development/vendor/solarized
+  open "$HOME/Development/vendor/solarized/iterm2-colors-solarized/Solarized Dark.itermcolors"
   read -p "Press any key to continue... " -n1 -s
 fi
 
