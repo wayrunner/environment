@@ -187,7 +187,7 @@ if [[ -z $(defaults read com.googlecode.iterm2 | grep 'd326c889-7564-409b-8b26-d
   echo "configure iTerm"
   defaults write com.googlecode.iterm2 PromptOnQuit -bool false
   defaults write com.googlecode.iterm2 SUEnableAutomaticChecks -bool true
-  wget -nv https://raw.githubusercontent.com/damonmorgan/environment/master/iTerm2/DynamicProfiles/inconsolarized.json -O $HOME/Library/Application\ Support/iTerm2/DynamicProfiles/inconsolarized.json
+  wget -nv https://raw.githubusercontent.com/ronald05arias/environment/master/iTerm2/DynamicProfiles/inconsolarized.json -O $HOME/Library/Application\ Support/iTerm2/DynamicProfiles/inconsolarized.json
   defaults write com.googlecode.iterm2 "Default Bookmark Guid" "d326c889-7564-409b-8b26-d3671001617e"
 fi
 
