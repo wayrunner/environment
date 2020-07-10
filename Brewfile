@@ -110,6 +110,7 @@ cask 'authy'
 cask 'notion'
 cask 'slack'
 cask 'zoom'
+cask 'postman'
 
 tap 'homebrew/cask-drivers'
 cask "logitech-options"
