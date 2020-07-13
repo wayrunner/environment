@@ -7,6 +7,7 @@ mas 'Xcode', id: 497799835
 #mas 'WireGuard', id: 1451685025
 mas 'Keynote', id: 409183694
 #mas 'Slack', id: 803453959
+mas 'Smart JSON Editor', id: 1268962404
 
 # replace default openssl
 brew 'openssl'
@@ -66,6 +67,7 @@ brew 'terminal-notifier'
 brew 'forego'
 brew 'jq'
 brew 'svn'
+cask 'monitorcontrol'
 
 # heroku
 tap 'heroku/brew'
@@ -111,6 +113,7 @@ cask 'notion'
 cask 'slack'
 cask 'zoom'
 cask 'postman'
+cask 'diffmerge'
 
 tap 'homebrew/cask-drivers'
 cask "logitech-options"
