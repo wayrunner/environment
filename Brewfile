@@ -68,6 +68,7 @@ brew 'forego'
 brew 'jq'
 brew 'svn'
 cask 'monitorcontrol'
+brew 'cookiecutter'
 
 # heroku
 tap 'heroku/brew'
