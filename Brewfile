@@ -115,6 +115,7 @@ cask 'slack'
 cask 'zoom'
 cask 'postman'
 cask 'diffmerge'
+cask 'microsoft-teams'
 
 tap 'homebrew/cask-drivers'
 cask "logitech-options"
