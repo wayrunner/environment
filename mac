@@ -114,6 +114,9 @@ if [[ -z $(brew cask list | grep 'visual-studio-code') ]]; then
   code --install-extension vscode-icons-team.vscode-icons
 fi
 
+echo "Install Elixir version manager"
+curl -sSL https://raw.githubusercontent.com/taylor/kiex/master/install | bash -s
+
 if [[ ! -f $HOME/.dotfiles/zshrc ]]; then
   echo "install dotfiles"
   git clone git@github.com:ronald05arias/dotfiles.git $HOME/.dotfiles
