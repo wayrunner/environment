@@ -119,6 +119,7 @@ cask 'microsoft-teams'
 
 tap 'homebrew/cask-drivers'
 cask "logitech-options"
+cask "dbschema"
 
 # drives
 cask 'dropbox'
