@@ -1,4 +1,4 @@
-Ron's dev Environment
+Dev Environment
 ========================
 
 Environment is a script to get OSX/macOS or Linux set up as a development machine with common Qmee preferences.
